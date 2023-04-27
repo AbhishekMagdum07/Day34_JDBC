@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class Employee_Payroll {
     public static void main(String[] args) {
-        //UC2 :Ability for Employee Payroll Service to retrieve the Employee Payroll from the Database
+        //UC3 :Ability to update the salary
 
         try {
             //1.Load a driver
@@ -22,11 +22,14 @@ public class Employee_Payroll {
             }
 
             //3.Write a Query
-            String query = "select * from employee_payroll;";
+            String query = "update employee_payroll set salary = 300000 where id = 2";
 
             //4.prepare a statement
             Statement statement = connection.createStatement();
-            ResultSet set =  statement.executeQuery(query);
+            statement.execute(query);
+            ResultSet set =  statement.executeQuery("select * from employee_payroll");
+
+            System.out.println("...Inserted.");;
 
             while (set.next()){   // Retrieve all data from employee_payroll table.
                 System.out.println("Id : "+set.getInt(1));
