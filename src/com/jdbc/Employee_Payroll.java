@@ -1,13 +1,10 @@
 package com.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Employee_Payroll {
     public static void main(String[] args) {
-        //UC3 :Ability to update the salary
+        //UC4 :Ability to update the salary using prepared statement.
 
         try {
             //1.Load a driver
@@ -22,14 +19,17 @@ public class Employee_Payroll {
             }
 
             //3.Write a Query
-            String query = "update employee_payroll set salary = 300000 where id = 2";
+            String query = "update employee_payroll set salary = ? where id = ?";
 
-            //4.prepare a statement
-            Statement statement = connection.createStatement();
-            statement.execute(query);
-            ResultSet set =  statement.executeQuery("select * from employee_payroll");
+            //update salary using prepared statement
+            PreparedStatement pstmt = connection.prepareStatement(query);
 
-            System.out.println("...Inserted.");;
+            pstmt.setString(1, "20000");
+            pstmt.setString(2,"2");
+            pstmt.executeUpdate();
+            System.out.println(".....Updated");
+
+            ResultSet set =  pstmt.executeQuery("select * from employee_payroll");
 
             while (set.next()){   // Retrieve all data from employee_payroll table.
                 System.out.println("Id : "+set.getInt(1));
